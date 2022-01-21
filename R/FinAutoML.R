@@ -3,7 +3,7 @@
 #' @description Create mlr3 graph as AUTOML for prediction in finance (investing).
 #'
 #' @param tasks mlr3 tasks.
-#' @param workers number of workers in parallle.
+#' @param workers number of workers in parallel.
 #' @param outer_folds number of outer CV folds.
 #' @param inner_evals number of iterations inside every fold.
 #'
