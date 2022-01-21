@@ -64,13 +64,13 @@ FinAutoML <- function(tasks, workers = 2L, outer_folds = 3L, inner_evals = 50L) 
   )
   ensemble_learners = learners_l_ensemble %>>%
     po("classifavg")
+  ensemble_learners = as_learner(ensemble_learners)
+  ensemble_learners$predict_sets <- c("train", "test")
 
 
   # LEARNERS ----------------------------------------------------------------
   # define tabner individually because lrn function doesnt work for now, looh at mlr3torch
   lrn_tabnet <- LearnerClassifTorchTabnet$new()
-  lrn_tabnet <- LearnerClassifTorchTabnet$new()
-  lrn_tabnet$id
   lrn_tabnet$param_set$values$epochs <- 10
   lrn_tabnet$predict_sets <- c("train", "test")
   lrn_tabnet$predict_type <- "prob"
@@ -94,8 +94,10 @@ FinAutoML <- function(tasks, workers = 2L, outer_folds = 3L, inner_evals = 50L) 
     # nop_ensemble = po("nop", id = "nop_ensemble")
     # kerasff = lrn("classif.kerasff", predict_type = "prob", predict_sets = c("train", "test"), id = "kerasff")
     tabnet = lrn_tabnet,
-    ensemble_avg = as_learner(ensemble_learners)
+    ensemble_avg = ensemble_learners
   )
+  learners_l$xgboost$predict_sets
+  learners_l$ensemble_avg$predict_sets
 
   # create graph from list of learners
   learners = po("branch", options = c("xgboost", "ranger", "glmnet", "kknn", "tabnet", "ensemble_avg"), id = "branch_learners") %>>%
