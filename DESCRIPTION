@@ -1,0 +1,26 @@
+Package: finautoml
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Authors@R: c(
+    person("Luka", "Sikic", email = "luka.sikic@gmail.com", role = c("cre","aut")),
+    person("Mislav", "Sagovac", email = "mislav.sagovac@contentio.biz", role = c("aut")))
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: AutoML algorithm for finding alpha on financial markets. The AutoML contains
+    preprocessing and ML modleing steps with ensembles. The model is applied on 3 datasets.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports:
+    data.table,
+    mlr3verse,
+    mlr3fselect,
+    mlr3filters,
+    checkmate,
+    future,
+    future.apply,
+    paradox,
+    mlr3torch,
+    mlr3
+Remotes: mlr-org/mlr3torch
+RoxygenNote: 7.1.2
