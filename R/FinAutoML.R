@@ -50,7 +50,7 @@ FinAutoML <- function(tasks, workers = 2L, outer_folds = 3L, inner_evals = 50L) 
   # define tabner individually because lrn function doesnt work for now, looh at mlr3torch
   lrn_tabnet_ens <- LearnerClassifTorchTabnet$new()
   lrn_tabnet_ens$id <- "lrn_tabnet"
-  lrn_tabnet_ens$param_set$values$epochs <- 10
+  lrn_tabnet_ens$param_set$values$epochs <- 20
   lrn_tabnet_ens$predict_sets <- c("train", "test")
   lrn_tabnet_ens$predict_type <- "prob"
 
@@ -71,7 +71,7 @@ FinAutoML <- function(tasks, workers = 2L, outer_folds = 3L, inner_evals = 50L) 
   # LEARNERS ----------------------------------------------------------------
   # define tabner individually because lrn function doesnt work for now, looh at mlr3torch
   lrn_tabnet <- LearnerClassifTorchTabnet$new()
-  lrn_tabnet$param_set$values$epochs <- 10
+  lrn_tabnet$param_set$values$epochs <- 20
   lrn_tabnet$predict_sets <- c("train", "test")
   lrn_tabnet$predict_type <- "prob"
   lrn_tabnet$id = "tabnet"
