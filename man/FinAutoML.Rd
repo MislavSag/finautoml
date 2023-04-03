@@ -4,12 +4,18 @@
 \alias{FinAutoML}
 \title{FinAutoML}
 \usage{
-FinAutoML(tasks, workers = 2L, outer_folds = 3L, inner_evals = 50L)
+FinAutoML(
+  tasks,
+  workers = 1L,
+  outer_folds = 3L,
+  inner_evals = 50L,
+  outer_cv = rsmp("RollingWindowCV", folds = outer_folds, fixed_window = FALSE)
+)
 }
 \arguments{
 \item{tasks}{mlr3 tasks.}
 
-\item{workers}{number of workers in parallle.}
+\item{workers}{number of workers in parallel.}
 
 \item{outer_folds}{number of outer CV folds.}
 

@@ -23,4 +23,4 @@ Imports:
     mlr3torch,
     mlr3
 Remotes: mlr-org/mlr3torch
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3

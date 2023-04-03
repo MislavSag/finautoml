@@ -7,4 +7,5 @@
 #' @import future
 #' @import future.apply
 #' @import paradox
+#' @import mlr3
 "_PACKAGE"
