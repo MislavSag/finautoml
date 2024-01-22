@@ -1,3 +1,4 @@
+#' @export PipeOpDropNACol
 PipeOpDropNACol = R6::R6Class(
   "PipeOpDropNACol",
   inherit = mlr3pipelines::PipeOpTaskPreprocSimple,

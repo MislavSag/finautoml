@@ -20,6 +20,12 @@ FinAutoML(
 \item{outer_folds}{number of outer CV folds.}
 
 \item{inner_evals}{number of iterations inside every fold.}
+
+\item{outer_cv}{outer CV.}
+
+\item{folds}{Folds.}
+
+\item{fixed_window}{Window ficed or not.}
 }
 \description{
 Create mlr3 graph as AUTOML for prediction in finance (investing).

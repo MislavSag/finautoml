@@ -509,6 +509,9 @@ Graph3 <- function() {
 #' @param workers number of workers in parallel.
 #' @param outer_folds number of outer CV folds.
 #' @param inner_evals number of iterations inside every fold.
+#' @param outer_cv outer CV.
+#' @param folds Folds.
+#' @param fixed_window Window ficed or not.
 #'
 #' @import data.table
 #' @import checkmate
@@ -565,4 +568,3 @@ FinAutoML <- function(tasks, workers = 1L, outer_folds = 3L, inner_evals = 50L,
 
   return(bmr)
 }
-

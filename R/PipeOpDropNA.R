@@ -1,3 +1,4 @@
+#' @export PipeOpDropNA
 PipeOpDropNA = R6::R6Class(
   "PipeOpDropNA",
   inherit = mlr3pipelines::PipeOpTaskPreproc,
@@ -10,14 +11,17 @@ PipeOpDropNA = R6::R6Class(
   private = list(
     .train_task = function(task) {
       self$state = list()
-      featuredata = task$data(cols = task$feature_names)
-      exclude = apply(is.na(featuredata), 1, any)
-      task$filter(task$row_ids[!exclude])
+      private$compute_exclude(task)
     },
 
     .predict_task = function(task) {
-      # nothing to be done
-      task
+      private$compute_exclude(task)
+    },
+
+    compute_exclude = function(task) {
+      featuredata = task$data(cols = task$feature_names)
+      exclude = apply(is.na(featuredata), 1, any)
+      task$filter(task$row_ids[!exclude])
     }
   )
 )

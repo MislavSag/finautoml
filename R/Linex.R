@@ -1,30 +1,18 @@
-#' Linex Regression Measure
+#' @title Linex Regression Measure
 #'
+#' @description
 #' Measure for regression tasks that calculates the mean absolute error using the Linex loss function.
 #' The Linex loss function is a combination of the mean absolute error and mean squared error.
-#' The Linex measure is defined as:
-#' $$
-#' \text{Linex}(y, f) = \frac{1}{n} \sum_{i = 1}^n a_1 \{ \exp(-a_2(y_i - f_i)) - a_2(y_i - f_i) - 1 \}
-#' $$
-#' where $y$ is a vector of true response values, $f$ is a vector of predicted response values, and $a_1$ and $a_2$ are parameters that control the relative weighting of the mean absolute error and mean squared error.
 #'
 #' @format A R6 generator object
-#' @inherit mlr3::MeasureRegr
 #' @export Linex
-#' @examples
-#' library(mlr3)
-#' library(mlr3learners)
-#' library(mlr3measures)
-#'
-#' # generate toy data
-#' set.seed(1)
-#' data = generateRegrTask(10)
-#'
-#' # evaluate Lin
 Linex = R6::R6Class(
   "Linex",
   inherit = mlr3::MeasureRegr,
   public = list(
+
+    #' @description
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     initialize = function() {
       super$initialize(
         # custom id for the measure

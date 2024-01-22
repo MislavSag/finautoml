@@ -1,3 +1,12 @@
+#' @title Gauss cov Feature Selection
+#'
+#' @name mlr_filters_gausscov_f1st
+#'
+#' @description Extract important features by calling [gausscov::f1st()] in
+#' package \CRANpkg{gausscov}.
+#'
+#' @family Filter
+#' @export
 FilterGausscovF1st = R6::R6Class(
   "FilterGausscovF1st",
   inherit = mlr3filters::Filter,

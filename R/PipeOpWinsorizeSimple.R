@@ -1,3 +1,4 @@
+#' @export PipeOpWinsorizeSimple
 PipeOpWinsorizeSimple = R6::R6Class(
   "PipeOpWinsorizeSimple",
   inherit = mlr3pipelines::PipeOpTaskPreprocSimple,
@@ -10,7 +11,7 @@ PipeOpWinsorizeSimple = R6::R6Class(
         ParamLgl$new("na.rm", default = TRUE, tags = c("winsorize_tag")),
         ParamInt$new("qtype", lower = 1L, upper = 9L, default = 7L, tags = c("winsorize_tag"))
       ))
-      ps$values = list(qtype = 7L)
+      ps$values = list(qtype = 7L, na.rm = TRUE, probs_low = 0.95, probs_high = 0.05)
       super$initialize(id, param_set = ps, param_vals = param_vals, feature_types = c("numeric"))
     }
   ),
@@ -44,8 +45,8 @@ PipeOpWinsorizeSimple = R6::R6Class(
     },
 
     .transform_dt  = function(dt, levels) {
-      dt = dt[, Map(function(a, b) ifelse(a < b, b, a), .SD, self$state$minvals)]
-      dt = dt[, Map(function(a, b) ifelse(a > b, b, a), .SD, self$state$maxvals)]
+      dt = dt[, Map(function(a, b) data.table::fifelse(a < b, b, a), .SD, self$state$minvals)]
+      dt = dt[, Map(function(a, b) data.table::fifelse(a > b, b, a), .SD, self$state$maxvals)]
       dt
     }
   )
