@@ -1,4 +1,4 @@
-#' @export PipeOpUniform
+#' @export
 PipeOpUniform = R6::R6Class(
   "PipeOpUniform",
   inherit = mlr3pipelines::PipeOpTaskPreproc,

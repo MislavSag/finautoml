@@ -1,4 +1,4 @@
-#' @export PipeOpDropNA
+#' @export
 PipeOpDropNA = R6::R6Class(
   "PipeOpDropNA",
   inherit = mlr3pipelines::PipeOpTaskPreproc,
