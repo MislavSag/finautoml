@@ -5,7 +5,10 @@ PipeOpDropCorr = R6::R6Class(
   public = list(
     initialize = function(id = "drop.const", param_vals = list()) {
       ps = ParamSet$new(list(
-        ParamFct$new("use", c("everything", "all.obs", "complete.obs", "na.or.complete", "pairwise.complete.obs"), default = "everything"),
+        ParamFct$new("use",
+                     c("everything", "all.obs", "complete.obs",
+                       "na.or.complete", "pairwise.complete.obs"),
+                     default = "everything"),
         ParamFct$new("method", c("pearson", "kendall", "spearman"), default = "pearson"),
         ParamDbl$new("cutoff", lower = 0, upper = 1, default = 0.99)
       ))
