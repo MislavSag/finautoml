@@ -6,7 +6,6 @@
 #' @import checkmate
 #' @import mlr3verse
 #' @import mlr3fselect
-#' @import mlr3torch
 #' @import checkmate
 #' @import future
 #' @import future.apply
@@ -143,7 +142,6 @@ Graph <- function() {
 #' @import checkmate
 #' @import mlr3verse
 #' @import mlr3fselect
-#' @import mlr3torch
 #' @import checkmate
 #' @import paradox
 #' @import mlr3
@@ -218,7 +216,6 @@ Parameters <- function() {
 #' @import checkmate
 #' @import mlr3verse
 #' @import mlr3fselect
-#' @import mlr3torch
 #' @import checkmate
 #' @import future
 #' @import future.apply
@@ -339,7 +336,6 @@ Graph2 <- function() {
 #' @import checkmate
 #' @import mlr3verse
 #' @import mlr3fselect
-#' @import mlr3torch
 #' @import checkmate
 #' @import paradox
 #' @import mlr3
@@ -393,7 +389,6 @@ Parameters2 <- function() {
 #' @import checkmate
 #' @import mlr3verse
 #' @import mlr3fselect
-#' @import mlr3torch
 #' @import checkmate
 #' @import future
 #' @import future.apply
@@ -518,7 +513,6 @@ Graph3 <- function() {
 #' @import mlr3verse
 #' @import mlr3fselect
 #' @import mlr3fselect
-#' @import mlr3torch
 #' @import checkmate
 #' @import future
 #' @import future.apply
