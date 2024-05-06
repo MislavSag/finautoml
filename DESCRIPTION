@@ -20,7 +20,5 @@ Imports:
     future,
     future.apply,
     paradox,
-    mlr3torch,
     mlr3
-Remotes: mlr-org/mlr3torch
 RoxygenNote: 7.3.1
