@@ -40,11 +40,11 @@ Graph <- function() {
 
   # ENSEMBLE LEARNERS -------------------------------------------------------
   # define tabner individually because lrn function doesnt work for now, looh at mlr3torch
-  lrn_tabnet_ens <- LearnerClassifTorchTabnet$new()
-  lrn_tabnet_ens$id <- "lrn_tabnet"
-  lrn_tabnet_ens$param_set$values$epochs <- 20
-  lrn_tabnet_ens$predict_sets <- c("train", "test")
-  lrn_tabnet_ens$predict_type <- "prob"
+  # lrn_tabnet_ens <- LearnerClassifTorchTabnet$new()
+  # lrn_tabnet_ens$id <- "lrn_tabnet"
+  # lrn_tabnet_ens$param_set$values$epochs <- 20
+  # lrn_tabnet_ens$predict_sets <- c("train", "test")
+  # lrn_tabnet_ens$predict_type <- "prob"
 
   # ensemble graph
   learners_l_ensemble = list(
@@ -54,10 +54,10 @@ Graph <- function() {
     kknn = lrn("classif.kknn", predict_type = "prob", predict_sets = c("train", "test"), id = "kknn_ens"),
     # lda = lrn("classif.lda", predict_type = "prob", predict_sets = c("train", "test"), id = "lda_ens"),
     nnet = lrn("classif.nnet", predict_type = "prob", predict_sets = c("train", "test"), id = "nnet_ens"),
-    svm = lrn("classif.svm", predict_type = "prob", predict_sets = c("train", "test"), id = "svm_ens"),
+    svm = lrn("classif.svm", predict_type = "prob", predict_sets = c("train", "test"), id = "svm_ens")
     # extralearners
     # lda = lrn("classif.AdaBoostM1", predict_type = "prob", predict_sets = c("train", "test"), id = "adaboost_ens"),
-    tabnet = lrn_tabnet_ens
+    # tabnet = lrn_tabnet_ens
   )
   ensemble_learners = learners_l_ensemble %>>%
     po("classifavg")
@@ -66,12 +66,12 @@ Graph <- function() {
 
 
   # LEARNERS ----------------------------------------------------------------
-  # define tabner individually because lrn function doesnt work for now, looh at mlr3torch
-  lrn_tabnet <- LearnerClassifTorchTabnet$new()
-  lrn_tabnet$param_set$values$epochs <- 20
-  lrn_tabnet$predict_sets <- c("train", "test")
-  lrn_tabnet$predict_type <- "prob"
-  lrn_tabnet$id = "tabnet"
+  # # define tabner individually because lrn function doesnt work for now, looh at mlr3torch
+  # lrn_tabnet <- LearnerClassifTorchTabnet$new()
+  # lrn_tabnet$param_set$values$epochs <- 20
+  # lrn_tabnet$predict_sets <- c("train", "test")
+  # lrn_tabnet$predict_type <- "prob"
+  # lrn_tabnet$id = "tabnet"
 
   # learners
   learners_l = list(
@@ -92,7 +92,7 @@ Graph <- function() {
 
     # nop_ensemble = po("nop", id = "nop_ensemble")
     # kerasff = lrn("classif.kerasff", predict_type = "prob", predict_sets = c("train", "test"), id = "kerasff")
-    tabnet = lrn_tabnet,
+    # tabnet = lrn_tabnet,
     ensemble_avg = ensemble_learners
   )
 
