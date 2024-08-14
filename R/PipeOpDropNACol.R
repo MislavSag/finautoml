@@ -4,9 +4,9 @@ PipeOpDropNACol = R6::R6Class(
   inherit = mlr3pipelines::PipeOpTaskPreprocSimple,
   public = list(
     initialize = function(id = "drop.nacol", param_vals = list()) {
-      ps = ParamSet$new(list(
-        ParamDbl$new("cutoff", lower = 0, upper = 1, default = 0.05, tags = c("dropnacol_tag"))
-      ))
+      ps = ps(
+        cutoff = p_dbl(0.05, lower = 0, upper = 1, tags = c("dropnacol_tag"))
+      )
       ps$values = list(cutoff = 0.2)
       super$initialize(id, param_set = ps, param_vals = param_vals)
     }
