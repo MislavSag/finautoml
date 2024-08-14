@@ -6,10 +6,10 @@ PipeOpWinsorizeSimple = R6::R6Class(
     groups = NULL,
     initialize = function(id = "winsorization", param_vals = list()) {
       ps = ps(
-        probs_low = p_dbl(0.05, lower = 0, upper = 1, tags = "winsorize_tag"),
-        probs_high = p_dbl(0.95, lower = 0, upper = 1, tags = "winsorize_tag"),
-        na_rm = p_lgl(TRUE, tags = "winsorize_tag"),
-        qtype = p_int(7L, lower = 1L, upper = 9L, tags = "winsorize_tag")
+        probs_low = p_dbl(default = 0.05, lower = 0, upper = 1, tags = "winsorize_tag"),
+        probs_high = p_dbl(default = 0.95, lower = 0, upper = 1, tags = "winsorize_tag"),
+        na_rm = p_lgl(default = TRUE, tags = "winsorize_tag"),
+        qtype = p_int(default = 7L, lower = 1L, upper = 9L, tags = "winsorize_tag")
       )
       ps$values = list(qtype = 7L, na.rm = TRUE, probs_low = 0.95, probs_high = 0.05)
       super$initialize(id, param_set = ps, param_vals = param_vals, feature_types = c("numeric"))

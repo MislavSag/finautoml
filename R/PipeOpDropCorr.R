@@ -4,14 +4,14 @@ PipeOpDropCorr = R6::R6Class(
   inherit = mlr3pipelines::PipeOpTaskPreprocSimple,
   public = list(
     initialize = function(id = "drop.const", param_vals = list()) {
-      ps = ParamSet$new(list(
-        ParamFct$new("use",
-                     c("everything", "all.obs", "complete.obs",
-                       "na.or.complete", "pairwise.complete.obs"),
-                     default = "everything"),
-        ParamFct$new("method", c("pearson", "kendall", "spearman"), default = "pearson"),
-        ParamDbl$new("cutoff", lower = 0, upper = 1, default = 0.99)
-      ))
+      ps = ps(
+        use = p_fct(levels = c("everything", "all.obs", "complete.obs",
+                               "na.or.complete", "pairwise.complete.obs"),
+                    default = "everything"),
+        method = p_fct(levels = c("pearson", "kendall", "spearman"),
+                       default = "pearson"),
+        cutoff = p_dbl(lower = 0, upper = 1, default = 0.99)
+      )
       ps$values = list(use = "everything", method = "pearson", cutoff = 0.99)
       super$initialize(id = id, param_set = ps, param_vals = param_vals, feature_types = c("numeric"))
     }

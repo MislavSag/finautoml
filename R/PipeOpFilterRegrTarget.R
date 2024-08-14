@@ -6,10 +6,11 @@ PipeOpFilterRegrTarget = R6::R6Class(
     groups = NULL,
     initialize = function(id = "filter_target", param_vals = list()) {
       ps = ps(
-        q = p_dbl(0.1, lower = 0, upper = 1, tags = c("train", "filter_target"))
+        q = p_dbl(default = 0.1, lower = 0, upper = 1, tags = c("train", "filter_target"))
       )
       ps$values = list(q = 0.1)
-      super$initialize(id, param_set = ps, param_vals = param_vals, feature_types = c("numeric", "integer"))
+      super$initialize(id, param_set = ps, param_vals = param_vals,
+                       feature_types = c("numeric", "integer"))
     }
   ),
 
