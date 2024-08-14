@@ -11,7 +11,7 @@ PipeOpWinsorizeSimple = R6::R6Class(
         na_rm = p_lgl(default = TRUE, tags = "winsorize_tag"),
         qtype = p_int(default = 7L, lower = 1L, upper = 9L, tags = "winsorize_tag")
       )
-      ps$values = list(qtype = 7L, na.rm = TRUE, probs_low = 0.95, probs_high = 0.05)
+      ps$values = list(qtype = 7L, na_rm = TRUE, probs_low = 0.95, probs_high = 0.05)
       super$initialize(id, param_set = ps, param_vals = param_vals, feature_types = c("numeric"))
     }
   ),
@@ -36,7 +36,7 @@ PipeOpWinsorizeSimple = R6::R6Class(
       q = dt[, lapply(.SD,
                       quantile,
                       probs = c(pv$probs_low, pv$probs_high),
-                      na.rm = pv$na.rm,
+                      na.rm = pv$na_rm,
                       type = pv$qtype)]
       list(
         minvals = q[1],
