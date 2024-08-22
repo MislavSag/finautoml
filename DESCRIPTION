@@ -16,9 +16,11 @@ Imports:
     mlr3verse,
     mlr3fselect,
     mlr3filters,
+    mlr3pipelines,
     checkmate,
     future,
     future.apply,
     paradox,
-    mlr3
+    mlr3,
+    R6
 RoxygenNote: 7.3.1
