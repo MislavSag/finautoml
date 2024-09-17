@@ -98,6 +98,7 @@ PipeOpFilterRows = R6::R6Class(
       self$state = list()
       if (self$param_set$values$phase %in% c("always", "train") &&
           length(self$param_set$values$filter_formula)) {
+        print(self$param_set$values$filter_formula)
         filter_task(
           task,
           frm = self$param_set$values$filter_formula,

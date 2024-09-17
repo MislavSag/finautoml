@@ -7,4 +7,7 @@
 #' @import future.apply
 #' @import paradox
 #' @import mlr3
+#' @import mlr3filters
+#' @import mlr3pipelines
+#' @import R6
 "_PACKAGE"

@@ -1,14 +1,14 @@
-#' @title Gauss cov Feature Selection
+#' @title Gauss cov Feature Selection f3
 #'
-#' @name mlr_filters_gausscov_f1st
+#' @name mlr_filters_gausscov_f3st
 #'
-#' @description Extract important features by calling [gausscov::f1st()] in
+#' @description Extract important features by calling [gausscov::f3st()] in
 #' package \CRANpkg{gausscov}.
 #'
 #' @family Filter
 #' @export
-FilterGausscovF1st = R6::R6Class(
-  "FilterGausscovF1st",
+FilterGausscovF3st = R6::R6Class(
+  "FilterGausscovF3st",
   inherit = mlr3filters::Filter,
 
   public = list(
@@ -16,10 +16,13 @@ FilterGausscovF1st = R6::R6Class(
     #' @description Create a GaussCov object.
     initialize = function() {
       param_set = ps(
-        p0   = p_dbl(lower = 0, upper = 1, default = 0.01),
+        m      = p_int(lower = 1, upper = 10, default = 1),
+        kexmx	 = p_int(lower = 0, upper = 500, default = 0),
+        p0     = p_dbl(lower = 0.0001, upper = 0.99, default = 0.01),
         kmn  = p_int(lower = 0, default = 0),
         kmx  = p_int(lower = 0, default = 0),
-        mx   = p_int(lower = 1, default = 35),
+        mx   = p_int(lower = 1, default = 21),
+        lm   = p_int(lower = 1, default = 100),
         kex  = p_int(lower = 0, default = 0),
         sub  = p_lgl(default = TRUE),
         inr  = p_lgl(default = TRUE),
@@ -30,25 +33,18 @@ FilterGausscovF1st = R6::R6Class(
       )
 
       super$initialize(
-        id = "gausscov_f1st",
+        id = "gausscov_f3st",
         task_types = c("classif", "regr"),
         param_set = param_set,
         feature_types = c("integer", "numeric"),
         packages = "gausscov",
-        label = "Gauss Covariance f1st",
-        man = "mlr3filters::mlr_filters_gausscov_f1st"
+        label = "Gauss Covariance f3st",
+        man = "mlr3filters::mlr_filters_gausscov_f3st"
       )
     }
   ),
 
   private = list(
-    gausscov_ = function(x, y, pv) {
-      res = mlr3misc::invoke(gausscov::f1st, y = y, x = x, .args = pv)
-      res_1 = res[[1]]
-      res_1 = res_1[res_1[, 1] != 0, , drop = FALSE]
-      return(res_1)
-    },
-
     .calculate = function(task, nfeat) {
       # debug
       # pv = list(
@@ -63,12 +59,8 @@ FilterGausscovF1st = R6::R6Class(
       #   qq   = 0
       # )
 
-      # mlr_tasks
-      # task = tsk("mtcars")
-      # pv = list(); pv$p0 = 0.05
-
       # empty vector with variable names as vector names
-      scores = rep(0, length(task$feature_names))
+      scores = rep(-1, length(task$feature_names))
       scores = mlr3misc::set_names(scores, task$feature_names)
 
       # calculate gausscov pvalues
@@ -79,30 +71,32 @@ FilterGausscovF1st = R6::R6Class(
       } else {
         y = as.matrix(task$truth())
       }
-
-      gausscov_res = private$gausscov_(x, y, pv)
-      while (nrow(gausscov_res) == 1) {
+      res = mlr3misc::invoke(gausscov::f3st, y = y, x = x, .args = pv)
+      res_index <- tryCatch({unique(as.integer(res[[1]][1, ]))[-1]}, error = function(e) NULL)
+      while (is.null(res_index)) {
         pv$p0 = pv$p0 + pv$step
-        print(pv$p0)
-        gausscov_res = private$gausscov_(x, y, pv)
+        print(pv)
+        res = mlr3misc::invoke(gausscov::f3st, y = y, x = x, .args = pv)
+        res_index <- tryCatch({unique(as.integer(res[[1]][1, ]))[-1]}, error = function(e) NULL)
       }
+      res_index  <- res_index [res_index  != 0]
 
-      scores[gausscov_res[, 1]] = ceiling(abs(gausscov_res[, 4]))
+      scores[res_index] = 1
 
       # save scores
       if (pv$save) {
-        dir_name = "./gausscov_f1"
+        dir_name = "./gausscov_f3"
         if (!dir.exists(dir_name)) {
           dir.create(dir_name)
         }
         random_id <- paste0(sample(0:9, 15, replace = TRUE), collapse = "")
-        file_name = paste0("gausscov_f1-", task$id, "-", random_id, ".rds")
+        file_name = paste0("gausscov_f3-", task$id, "-", random_id, ".rds")
         file_name = file.path(dir_name, file_name)
         saveRDS(scores, file_name)
       }
 
+      # return scores
       sort(scores, decreasing = TRUE)
     }
   )
 )
-
