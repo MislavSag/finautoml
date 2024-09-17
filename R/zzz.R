@@ -10,4 +10,6 @@
 #' @import mlr3filters
 #' @import mlr3pipelines
 #' @import R6
+#' @import torch
+#' @import mlr3torch
 "_PACKAGE"

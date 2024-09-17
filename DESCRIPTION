@@ -22,5 +22,7 @@ Imports:
     future.apply,
     paradox,
     mlr3,
-    R6
+    R6,
+    torch,
+    mlr3torch
 RoxygenNote: 7.3.1
