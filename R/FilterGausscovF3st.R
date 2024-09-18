@@ -71,12 +71,13 @@ FilterGausscovF3st = R6::R6Class(
       } else {
         y = as.matrix(task$truth())
       }
-      res = mlr3misc::invoke(gausscov::f3st, y = y, x = x, .args = pv)
+      pv_gauss = pv[!names(pv) %in% c("step", "save")]
+      res = mlr3misc::invoke(gausscov::f3st, y = y, x = x, .args = pv_gauss)
       res_index <- tryCatch({unique(as.integer(res[[1]][1, ]))[-1]}, error = function(e) NULL)
       while (is.null(res_index)) {
         pv$p0 = pv$p0 + pv$step
         print(pv)
-        res = mlr3misc::invoke(gausscov::f3st, y = y, x = x, .args = pv)
+        res = mlr3misc::invoke(gausscov::f3st, y = y, x = x, .args = pv_gauss)
         res_index <- tryCatch({unique(as.integer(res[[1]][1, ]))[-1]}, error = function(e) NULL)
       }
       res_index  <- res_index [res_index  != 0]
