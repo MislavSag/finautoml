@@ -60,7 +60,9 @@ FilterGausscovF1st = R6::R6Class(
       #   sub  = TRUE,
       #   inr  = TRUE,
       #   xinr = FALSE,
-      #   qq   = 0
+      #   qq   = 0,
+      #   save = FALSE,
+      #   step = 0.01
       # )
 
       # mlr_tasks
@@ -80,11 +82,12 @@ FilterGausscovF1st = R6::R6Class(
         y = as.matrix(task$truth())
       }
 
-      gausscov_res = private$gausscov_(x, y, pv)
+      pv_gauss = pv[!names(pv) %in% c("step", "save")]
+      gausscov_res = private$gausscov_(x, y, pv_gauss)
       while (nrow(gausscov_res) == 1) {
         pv$p0 = pv$p0 + pv$step
         print(pv$p0)
-        gausscov_res = private$gausscov_(x, y, pv)
+        gausscov_res = private$gausscov_(x, y, pv_gauss)
       }
 
       scores[gausscov_res[, 1]] = ceiling(abs(gausscov_res[, 4]))
