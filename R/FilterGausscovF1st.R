@@ -85,7 +85,7 @@ FilterGausscovF1st = R6::R6Class(
       pv_gauss = pv[!names(pv) %in% c("step", "save")]
       gausscov_res = private$gausscov_(x, y, pv_gauss)
       while (nrow(gausscov_res) == 1) {
-        pv$p0 = pv$p0 + pv$step
+        pv_gauss$p0 = pv$p0 + pv$step
         print(pv$p0)
         gausscov_res = private$gausscov_(x, y, pv_gauss)
       }
