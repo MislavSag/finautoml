@@ -25,4 +25,4 @@ Imports:
     R6,
     torch,
     mlr3torch
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2

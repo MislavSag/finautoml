@@ -64,7 +64,7 @@ FilterGausscovF1st = R6::R6Class(
       #   save = FALSE,
       #   step = 0.01
       # )
-
+      #
       # mlr_tasks
       # task = tsk("mtcars")
       # pv = list(); pv$p0 = 0.05
@@ -86,11 +86,11 @@ FilterGausscovF1st = R6::R6Class(
       gausscov_res = private$gausscov_(x, y, pv_gauss)
       while (nrow(gausscov_res) == 1) {
         pv_gauss$p0 = pv_gauss$p0 + pv$step
-        print(pv$p0)
+        print(pv_gauss$p0)
         gausscov_res = private$gausscov_(x, y, pv_gauss)
       }
 
-      scores[gausscov_res[, 1]] = ceiling(abs(gausscov_res[, 4]))
+      scores[gausscov_res[, 1]] = 1 - gausscov_res[, 4]
 
       # save scores
       if (pv$save) {
@@ -104,8 +104,8 @@ FilterGausscovF1st = R6::R6Class(
         saveRDS(scores, file_name)
       }
 
-      sort(scores, decreasing = TRUE)
+      # sort(scores, decreasing = TRUE)
+      scores
     }
   )
 )
-

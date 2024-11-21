@@ -76,7 +76,7 @@ FilterGausscovF3st = R6::R6Class(
       res_index <- tryCatch({unique(as.integer(res[[1]][1, ]))[-1]}, error = function(e) NULL)
       while (is.null(res_index)) {
         pv_gauss$p0 = pv_gauss$p0 + pv$step
-        print(pv)
+        print(pv_gauss)
         res = mlr3misc::invoke(gausscov::f3st, y = y, x = x, .args = pv_gauss)
         res_index <- tryCatch({unique(as.integer(res[[1]][1, ]))[-1]}, error = function(e) NULL)
       }
