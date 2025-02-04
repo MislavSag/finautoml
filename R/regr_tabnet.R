@@ -82,7 +82,7 @@ params_tabnet = function() {
 #' }
 LearnerRegrTabNet = R6::R6Class(
   "LearnerRegrTabnet",
-  inherit = LearnerRegr,
+  inherit = mlr3::LearnerRegr,
   public = list(
     #' @description
     #' Creates a new instance of this [R6][R6::R6Class] class.

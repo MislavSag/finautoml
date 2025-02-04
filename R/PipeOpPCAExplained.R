@@ -3,7 +3,7 @@
 #' @export
 PipeOpPCAExplained = R6::R6Class(
   "PipeOpPCAExplained",
-  inherit = PipeOpTaskPreproc,
+  inherit = mlr3pipelines::PipeOpTaskPreproc,
   public = list(
     #' @description Constructor.
     #' @param id (character(1))

@@ -26,16 +26,59 @@ PipeOpDropCorr = R6::R6Class(
       #   cutoff = 0.9
       # )
 
-      fn = task$feature_types[type == self$feature_types, id]
-      data = task$data(cols = fn)
-      pv = self$param_set$values
+      ########## THIS IS OLD WAY #############
+      # fn = task$feature_types[type == self$feature_types, id]
+      # data = task$data(cols = fn)
+      # pv = self$param_set$values
+      #
+      # cm = mlr3misc::invoke(stats::cor, x = data, use = pv$use, method = pv$method)
+      # cm[upper.tri(cm)] <- 0
+      # diag(cm) <- 0
+      # cm <- abs(cm)
+      # remove_cols <- colnames(data)[apply(cm, 2, function(x) any(x > pv$cutoff))]
+      # keep_cols <- setdiff(fn, remove_cols)
+      # list(cnames = keep_cols)
+      ########## THIS IS OLD WAY #############
 
-      cm = mlr3misc::invoke(stats::cor, x = data, use = pv$use, method = pv$method)
-      cm[upper.tri(cm)] <- 0
-      diag(cm) <- 0
-      cm <- abs(cm)
-      remove_cols <- colnames(data)[apply(cm, 2, function(x) any(x > pv$cutoff))]
-      keep_cols <- setdiff(fn, remove_cols)
+      # Compute correlation matrix
+      cor_mat = mlr3misc::invoke(
+        stats::cor,
+        x = data,
+        use = pv$use,
+        method = pv$method
+      )
+      cor_abs = abs(cor_mat)
+
+      # Ignore upper triangle & diagonal for easier checking
+      cor_abs[upper.tri(cor_abs)] = 0
+      diag(cor_abs) = 0
+
+      # We'll store indices of columns to remove
+      to_remove = integer(0)
+
+      # Walk through each column in sequence
+      for (i in seq_len(ncol(cor_abs))) {
+        # If this column is already marked for removal, skip
+        if (i %in% to_remove) next
+
+        # Find columns correlated above the threshold with column i
+        high_cor_with_i = which(cor_abs[, i] > pv$cutoff)
+
+        # Mark those columns (except i itself) for removal
+        for (j in high_cor_with_i) {
+          if (!(j %in% to_remove) && j != i) {
+            to_remove = c(to_remove, j)
+          }
+        }
+      }
+
+      # Make sure we have unique indices only
+      to_remove = unique(to_remove)
+
+      # Prepare the final set of columns to KEEP
+      keep_idx = setdiff(seq_len(ncol(data)), to_remove)
+      keep_cols = colnames(data)[keep_idx]
+
       list(cnames = keep_cols)
     },
 
