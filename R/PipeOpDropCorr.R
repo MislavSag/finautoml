@@ -27,10 +27,6 @@ PipeOpDropCorr = R6::R6Class(
       # )
 
       ########## THIS IS OLD WAY #############
-      # fn = task$feature_types[type == self$feature_types, id]
-      # data = task$data(cols = fn)
-      # pv = self$param_set$values
-      #
       # cm = mlr3misc::invoke(stats::cor, x = data, use = pv$use, method = pv$method)
       # cm[upper.tri(cm)] <- 0
       # diag(cm) <- 0
@@ -39,6 +35,10 @@ PipeOpDropCorr = R6::R6Class(
       # keep_cols <- setdiff(fn, remove_cols)
       # list(cnames = keep_cols)
       ########## THIS IS OLD WAY #############
+
+      fn = task$feature_types[type == self$feature_types, id]
+      data = task$data(cols = fn)
+      pv = self$param_set$values
 
       # Compute correlation matrix
       cor_mat = mlr3misc::invoke(
